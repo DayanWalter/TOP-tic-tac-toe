@@ -17,3 +17,15 @@ const gameBoard = (() => {
         add,
     };
 })();
+// add  a factory function for player creation
+const Player = (name, token) => {
+    const method = () => console.log(name, token);
+    const getName = () => name;
+    const getToken = () => token;
+
+    return{
+        method,
+    };
+}
+const player1 = Player("Player 1", "1");
+const player2 = Player("Player 2", "2");
