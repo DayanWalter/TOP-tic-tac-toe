@@ -1,6 +1,12 @@
 // create an object and call it Gameboard
-const gameboard = {
+// create the object as a module
+const gameBoard = (() => {
 // Put an array as property in the object
 // fill it with an example
-    board: [x,o,x,o,x,o,x,o,x]
-}
+    const board = ["x","o","x","o","x","o","x","o","x"];
+return {
+    board,
+};
+
+})();
+console.log(gameBoard.board);
