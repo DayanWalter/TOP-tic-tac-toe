@@ -16,17 +16,22 @@ const gameBoard = (() => {
 
 // add  a factory function for player creation
 const Player = (name, token) => {
-    const _getName = () => name;
-    const _getToken = () => token;
-
-    const add = (row, column) => gameBoard.board[row][column] = _getToken();
-    const sayHello = () => console.log(`${name} says: Hello!`);
+    let _getName = () => name;
+    let _getToken = () => token;
+    const addChoice = (row, column) => {
+        gameBoard.board[row][column] = token;
+        console.log(_getName() + " took " + _getToken() + " and made a choice.");
+        console.log(gameBoard.board);
+    };
 
     return{
-        add,
-        sayHello,
+        addChoice,
     };
 }
 
 const player1 = Player("Player 1", "1");
 const player2 = Player("Player 2", "2");
+
+const displayController = (() => {
+
+})();
