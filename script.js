@@ -31,8 +31,14 @@ const Gameboard = (() => {
   const playerTwo = createPlayer("Player Two", "O");
 
   const render = () => {
-    return Gameboard.getBoard()
+    return console.log(Gameboard.getBoard())
   }
+
+  const GameController = (() => {
+    console.log("Here we go!");
+    render();
+    
+  })();
 
 
 
