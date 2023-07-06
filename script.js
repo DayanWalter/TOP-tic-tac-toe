@@ -1,47 +1,3 @@
-// const Gameboard = (() => {
-//     const rows = 3;
-//     const columns = 3;
-//     const board = [];
-  
-//     for (let i = 0; i < rows; i++) {
-//       board[i] = [];
-//       for (let j = 0; j < columns; j++) {
-//         board[i].push(0);
-//       }
-//     }
-//     const getBoard = () => board
-
-
-//     return {
-//         getBoard,
-//     }
-//   })();
-
-//   const createPlayer = (player, token) => {
-//     const getPlayer = () => player;
-//     const getToken = () => token;
-//     const addToken = (row, column) => {
-//       Gameboard.getBoard()[row][column] = getToken()
-//     }
-//     return{
-//       addToken,
-//     }
-//   }
-//   const playerOne = createPlayer("Player One", "X");
-//   const playerTwo = createPlayer("Player Two", "O");
-
-//   const render = () => {
-//     return console.log(Gameboard.getBoard())
-//   }
-
-//   const GameController = (() => {
-//     console.log("Here we go!");
-//     render();
-
-//   })();
-
-
-
   function Gameboard() {
     const rows = 3;
     const columns = 3;
@@ -65,15 +21,17 @@
     // In order to drop a token, we need to find what the lowest point of the
     // selected column is, *then* change that cell's value to the player number
     const dropToken = (row, column, player) => {
-      // const availableCells = board.filter((cell) => cell[row][column].getValue() === 0).map(cell => cell[row][column]);
-  
+      if(board[row][column].getValue() === 0){
+        board[row][column].addToken(player);
+      }else{
+        console.log("Choose another field");
+      }
       // // If no cells make it through the filter, 
       // // the move is invalid. Stop execution.
       // if (!availableCells.length) return;
   
       // // Otherwise, I have a valid cell, the last one in the filtered array
       // const lowestRow = availableCells.length - 1;
-      board[row][column].addToken(player);
     };
   
     // This method will be used to print our board to the console.
