@@ -17,6 +17,22 @@ const Gameboard = (() => {
     }
   })();
 
+  const createPlayer = (player, token) => {
+    const getPlayer = () => player;
+    const getToken = () => token;
+    const addToken = (row, column) => {
+      Gameboard.getBoard()[row][column] = getToken()
+
+    }
+    return{
+      addToken,
+    }
+  }
+  const playerOne = createPlayer("Player One", "X");
+  const playerTwo = createPlayer("Player Two", "O");
+
+
+
 
 
 //   function Gameboard() {
