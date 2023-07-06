@@ -10,10 +10,14 @@ const Gameboard = (() => {
       }
     }
     const getBoard = () => board
+
+
     return {
-        getBoard
+        getBoard,
     }
   })();
+
+
 
 //   function Gameboard() {
 //     const rows = 6;
