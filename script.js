@@ -9,8 +9,9 @@ const Gameboard = (() => {
         board[i].push(0);
       }
     }
+    const getBoard = () => board
     return {
-        board
+        getBoard
     }
   })();
 
