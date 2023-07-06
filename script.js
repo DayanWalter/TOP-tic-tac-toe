@@ -22,7 +22,6 @@ const Gameboard = (() => {
     const getToken = () => token;
     const addToken = (row, column) => {
       Gameboard.getBoard()[row][column] = getToken()
-
     }
     return{
       addToken,
@@ -31,7 +30,9 @@ const Gameboard = (() => {
   const playerOne = createPlayer("Player One", "X");
   const playerTwo = createPlayer("Player Two", "O");
 
-
+  const render = () => {
+    return Gameboard.getBoard()
+  }
 
 
 
