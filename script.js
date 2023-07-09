@@ -24,7 +24,6 @@ const Player = (name, token) => {
   return {
     getName,
     getToken,
-    token,
   }
 }
 // 2 Players created
