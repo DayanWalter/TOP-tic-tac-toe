@@ -7,9 +7,10 @@ const Gameboard = (()=>{
 for (let i = 0; i < rows; i++) {
   board[i] = [];
   for (let j = 0; j < columns; j++) {
-    board[i].push(0);
+    board[i].push(Cell());
   }
 }
+  // function for rendering the board to html
   const renderBoard = () => {
     let table = document.getElementById("boardArray")
     table.innerHTML = "";
@@ -18,18 +19,39 @@ for (let i = 0; i < rows; i++) {
 
       for (let j = 0; j < board[i].length; j++) {
           let cell = document.createElement("td");
-          cell.textContent = board[i][j];
+          cell.textContent = board[i][j].getValue();
           row.appendChild(cell);
       }
       table.appendChild(row);
     }
   }
+  const dropToken = (row, column, player) => {
+    board[row][column].addToken(player)
+  }
 
 return{
   board,
   renderBoard,
+  dropToken,
 }
 })();
+
+function Cell()  {
+  let value = 0;
+
+  // Accept a player's token to change the value of the cell
+  const addToken = (player) => {
+    value = player;
+  };
+
+  // How we will retrieve the current value of this cell through closure
+  const getValue = () => value;
+
+  return {
+    addToken,
+    getValue
+  };
+};
 
 // // function for player creation
 // const Player = (name, token) => {
@@ -49,7 +71,9 @@ return{
 const GameController = ((
   playerOneName = "Player One",
   playerTwoName = "Player Two") => {
-    const board = Gameboard;
+
+    const board = Gameboard.board;
+
     const players = [
       {
         name: playerOneName,
@@ -60,36 +84,47 @@ const GameController = ((
         token: "O"
       }
     ];
+
     let activePlayer = players[0];
 
     const switchPlayer = () => {
-      activePlayer = activePlayer === players[0] ? players[1] : players[0]
+      activePlayer = activePlayer === players[0] ? players[1] : players[0];
     };
 
     const getActivePlayer = () => activePlayer;
 
+    const printNewRound = () => {
+      Gameboard.renderBoard();
+      console.log(`${getActivePlayer().name}'s turn.`);
+    }
   // function for marking the board
-  const markBoard = (player, row, column) => {
-    Gameboard.board[row][column] = player.getToken();
-  }
-  // function for rendering the board to html
+  // const markBoard = (player, row, column) => {
+  //   Gameboard.board[row][column] = player.getToken();
+  // }
   
   // Initialize first round
   // PlayerOne chooses one field
   // after choosing, PlayerTwo's turn
-  const playRound = () => {
-    console.log("");
-  }
-  const playerChoose = () => {
-
+  const playRound = (row, column) => {
+    console.log(`Dropping ${getActivePlayer().name}'s token into row: ${row} and column: ${column}...`);
+    board[row][column].addToken(getActivePlayer().token)
+    switchPlayer();
+    printNewRound();
   }
 
   return{
-    markBoard,
+    printNewRound,
+    playRound,
   }
 
 })()
 Gameboard.renderBoard()
-// GameController.markBoard(playerOne,0,0)
-// GameController.renderBoard()
+GameController.playRound(0,0)
+GameController.playRound(1,0)
+GameController.playRound(0,2)
+
+
+
+
+
 
