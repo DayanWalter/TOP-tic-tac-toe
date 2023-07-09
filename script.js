@@ -1,43 +1,44 @@
 function Cell()  {
-  let value = "";
+  let value = ""
 
   const addToken = (player) => {
-    value = player;
-  };
+    value = player
+  }
 
-  const getValue = () => value;
+  const getValue = () => value
 
   return {
     addToken,
     getValue
-  };
-};
-// Module for Gameboard
-const Gameboard = (()=>{
-  let board = [];
-  let rows = 3;
-  let columns = 3;
-
-for (let i = 0; i < rows; i++) {
-  board[i] = [];
-  for (let j = 0; j < columns; j++) {
-    board[i].push(Cell());
   }
 }
+// Module for Gameboard
+const Gameboard = (()=>{
+  let board = []
+  let rows = 3
+  let columns = 3
+
+for (let i = 0; i < rows; i++) {
+  board[i] = []
+  for (let j = 0; j < columns; j++) {
+    board[i].push(Cell())
+  }
+}
+
   // method for rendering the board to html
   const renderBoard = () => {
     let table = document.getElementById("boardArray")
-    table.innerHTML = "";
+    table.innerHTML = ""
     for (let i = 0; i < board.length; i++) {
-      let row = document.createElement("tr");
+      let row = document.createElement("tr")
 
       for (let j = 0; j < board[i].length; j++) {
-          let cell = document.createElement("td");
-          cell.textContent = board[i][j].getValue();
-          cell.setAttribute("onclick", `GameController.playRound(${i}, ${j})`);
-          row.appendChild(cell);
+          let cell = document.createElement("td")
+          cell.textContent = board[i][j].getValue()
+          cell.setAttribute("onclick", `GameController.playRound(${i}, ${j})`)
+          row.appendChild(cell)
       }
-      table.appendChild(row);
+      table.appendChild(row)
     }
   }
   // method for "dropping" a token
@@ -50,7 +51,7 @@ return{
   renderBoard,
   dropToken,
 }
-})();
+})()
 
 
 
@@ -71,47 +72,47 @@ const GameController = ((
       name: playerTwoName,
       token: "O"
     }
-  ];
+  ]
   // define the active player
-  let activePlayer = players[0];
+  let activePlayer = players[0]
 
   // method for switching every round the player
   const switchPlayer = () => {
-    activePlayer = activePlayer === players[0] ? players[1] : players[0];
+    activePlayer = activePlayer === players[0] ? players[1] : players[0]
   };
 
   // method for getting the active player
-  const getActivePlayer = () => activePlayer;
+  const getActivePlayer = () => activePlayer
 
   // method for starting a new round
   const printNewRound = () => {
-    Gameboard.renderBoard();
-    console.log(`${getActivePlayer().name}'s turn.`);
+    Gameboard.renderBoard()
+    console.log(`${getActivePlayer().name}'s turn.`)
   };
 
   // method for playing a round
   const playRound = (row, column) => {
     if(board[row][column].getValue() === ""){
-      console.log(`Dropping ${getActivePlayer().name}'s token into row: ${row} and column: ${column}...`);
+      console.log(`Dropping ${getActivePlayer().name}'s token into row: ${row} and column: ${column}...`)
       board[row][column].addToken(getActivePlayer().token)
-      winner();
-      switchPlayer();
-      printNewRound();
+      winner()
+      switchPlayer()
+      printNewRound()
     }else{
-      console.log("Choose another field");
+      console.log("Choose another field")
     }
   };
 
-  // check for winner
+  // method for checking for winner
   const winner = ()=>{
     if(checkEquality() === true){
-      console.log(`${getActivePlayer().name}, with ${getActivePlayer().token} won!`);
+      console.log(`${getActivePlayer().name}, with ${getActivePlayer().token} won!`)
     };
   };
 
   // method for checking equality
   const checkEquality = () => {
-    const boardToCheck = Gameboard.board;
+    const boardToCheck = Gameboard.board
 
     // check horizontal equality
     for (let row of boardToCheck) {
@@ -119,9 +120,9 @@ const GameController = ((
         row[0].getValue() !== "" &&
         row.every(cell => cell.getValue() === row[0].getValue())
         ) {
-        return true;
-      };
-    };
+        return true
+      }
+    }
 
     // check vertical equality
     for (let col = 0; col < 3; col++) {
@@ -130,9 +131,9 @@ const GameController = ((
         boardToCheck[0][col].getValue() === boardToCheck[1][col].getValue() &&
         boardToCheck[1][col].getValue() === boardToCheck[2][col].getValue()
       ) {
-        return true;
-      };
-    };
+        return true
+      }
+    }
 
     // check diagonal equality
     if (
@@ -142,19 +143,19 @@ const GameController = ((
         (boardToCheck[0][2].getValue() === boardToCheck[1][1].getValue() &&
           boardToCheck[1][1].getValue() === boardToCheck[2][0].getValue()))
     ) {
-      return true;
-    };
-    return false;
-  };
+      return true
+    }
+    return false
+  }
 
 
 
   return{
     printNewRound,
     playRound,
-  };
+  }
 
-})();
+})()
 
 
 
