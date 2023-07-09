@@ -1,3 +1,17 @@
+function Cell()  {
+  let value = "";
+
+  const addToken = (player) => {
+    value = player;
+  };
+
+  const getValue = () => value;
+
+  return {
+    addToken,
+    getValue
+  };
+};
 // Module for Gameboard
 const Gameboard = (()=>{
   let board = [];
@@ -38,20 +52,7 @@ return{
 }
 })();
 
-function Cell()  {
-  let value = "";
 
-  const addToken = (player) => {
-    value = player;
-  };
-
-  const getValue = () => value;
-
-  return {
-    addToken,
-    getValue
-  };
-};
 
 // Module for controlling the flow of the game
 const GameController = ((
@@ -87,24 +88,75 @@ const GameController = ((
     Gameboard.renderBoard();
     console.log(`${getActivePlayer().name}'s turn.`);
   };
+
   // method for playing a round
   const playRound = (row, column) => {
     if(board[row][column].getValue() === ""){
-    console.log(`Dropping ${getActivePlayer().name}'s token into row: ${row} and column: ${column}...`);
-    board[row][column].addToken(getActivePlayer().token)
-    switchPlayer();
-    printNewRound();
+      console.log(`Dropping ${getActivePlayer().name}'s token into row: ${row} and column: ${column}...`);
+      board[row][column].addToken(getActivePlayer().token)
+      winner();
+      switchPlayer();
+      printNewRound();
     }else{
       console.log("Choose another field");
     }
-  }
+  };
+
+  // check for winner
+  const winner = ()=>{
+    if(checkEquality() === true){
+      console.log(`${getActivePlayer().name}, with ${getActivePlayer().token} won!`);
+    };
+  };
+
+  // method for checking equality
+  const checkEquality = () => {
+    const boardToCheck = Gameboard.board;
+
+    // check horizontal equality
+    for (let row of boardToCheck) {
+      if (
+        row[0].getValue() !== "" &&
+        row.every(cell => cell.getValue() === row[0].getValue())
+        ) {
+        return true;
+      };
+    };
+
+    // check vertical equality
+    for (let col = 0; col < 3; col++) {
+      if (
+        boardToCheck[0][col].getValue() !== "" &&
+        boardToCheck[0][col].getValue() === boardToCheck[1][col].getValue() &&
+        boardToCheck[1][col].getValue() === boardToCheck[2][col].getValue()
+      ) {
+        return true;
+      };
+    };
+
+    // check diagonal equality
+    if (
+      boardToCheck[1][1].getValue() !== "" &&
+      ((boardToCheck[0][0].getValue() === boardToCheck[1][1].getValue() &&
+        boardToCheck[1][1].getValue() === boardToCheck[2][2].getValue()) ||
+        (boardToCheck[0][2].getValue() === boardToCheck[1][1].getValue() &&
+          boardToCheck[1][1].getValue() === boardToCheck[2][0].getValue()))
+    ) {
+      return true;
+    };
+    return false;
+  };
+
+
 
   return{
     printNewRound,
     playRound,
-  }
+  };
 
-})()
+})();
+
+
 
 // example
 GameController.printNewRound()
