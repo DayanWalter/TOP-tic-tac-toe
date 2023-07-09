@@ -24,7 +24,8 @@
       if(board[row][column].getValue() === 0){
         board[row][column].addToken(player);
       }else{
-        console.log("Choose another field");
+        console.log("Field was already choosen!");
+        return;
       }
       // // If no cells make it through the filter, 
       // // the move is invalid. Stop execution.
@@ -118,7 +119,7 @@
       // Switch player turn
       switchPlayerTurn();
       printNewRound();
-    };
+  };
   
     // Initial play game message
     printNewRound();
