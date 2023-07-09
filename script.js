@@ -14,3 +14,15 @@ return{
   board
 }
 })()
+
+const Player = (name, token){
+  const getName = () => name;
+  const getToken = () => token;
+
+  return {
+    getName,
+    getToken,
+  }
+}
+let playerOne = Player("Player One", "X");
+let playerTwo = Player("Player Two", "O");
