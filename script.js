@@ -20,6 +20,7 @@ for (let i = 0; i < rows; i++) {
       for (let j = 0; j < board[i].length; j++) {
           let cell = document.createElement("td");
           cell.textContent = board[i][j].getValue();
+          cell.setAttribute("onclick", `GameController.playRound(${i}, ${j})`);
           row.appendChild(cell);
       }
       table.appendChild(row);
@@ -102,10 +103,11 @@ const GameController = ((
 })()
 
 // example
-Gameboard.renderBoard()
-GameController.playRound(0,0)
-GameController.playRound(1,0)
-GameController.playRound(0,2)
+GameController.printNewRound()
+// Gameboard.renderBoard()
+// GameController.playRound(0,0)
+// GameController.playRound(1,0)
+// GameController.playRound(0,2)
 
 
 
