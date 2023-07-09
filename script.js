@@ -15,14 +15,25 @@ return{
 }
 })()
 
-const Player = (name, token){
+const Player = (name, token) => {
   const getName = () => name;
   const getToken = () => token;
 
   return {
     getName,
     getToken,
+    token,
   }
 }
+
 let playerOne = Player("Player One", "X");
 let playerTwo = Player("Player Two", "O");
+
+const GameController = (() => {
+  const markBoard = (player, row, column) => {
+    Gameboard.board[row][column] = player.getToken();
+  }
+  return{
+    markBoard,
+  }
+})()
