@@ -36,8 +36,25 @@ const GameController = (() => {
   const markBoard = (player, row, column) => {
     Gameboard.board[row][column] = player.getToken();
   }
+  const renderBoard = () => {
+    
+    let table = document.getElementById("boardArray")
+    let board = Gameboard.board
+    for (let i = 0; i < board.length; i++) {
+      let row = document.createElement("tr");
 
+      for (let j = 0; j < board[i].length; j++) {
+          let cell = document.createElement("td");
+          cell.textContent = board[i][j];
+          row.appendChild(cell);
+      }
+
+      table.appendChild(row);
+    }
+  }
   return{
     markBoard,
+    renderBoard,
   }
+
 })()
