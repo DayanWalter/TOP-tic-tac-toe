@@ -133,3 +133,32 @@
   }
   
   const game = GameController();
+
+  function generateGrid() {
+    // Das 2D-Array aus der Gameboard-Funktion
+    const board = Gameboard();
+  
+    // Erstellen des HTML-Grids
+    const grid = document.createElement('table');
+  
+    // Schleife über die Zeilen des Arrays
+    for (let i = 0; i < board.getBoard().length; i++) {
+      const row = document.createElement('tr');
+  
+      // Schleife über die Spalten des Arrays
+      for (let j = 0; j < board.getBoard()[i].length; j++) {
+        const cell = document.createElement('td');
+        const cellText = document.createTextNode(board.getBoard()[i][j].getValue()); // Wert der Zelle im Array abrufen
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+      }
+  
+      // Hinzufügen der Zeile zum Grid
+      grid.appendChild(row);
+    }
+  
+    // Hinzufügen des Grids zum DOM (z.B. zum Body des Dokuments)
+    document.body.appendChild(grid);
+  }
+  
+  generateGrid();
