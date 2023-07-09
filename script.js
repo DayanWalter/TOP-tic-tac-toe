@@ -39,7 +39,7 @@ return{
 })();
 
 function Cell()  {
-  let value = "i";
+  let value = "";
 
   const addToken = (player) => {
     value = player;
@@ -89,10 +89,14 @@ const GameController = ((
   };
   // method for playing a round
   const playRound = (row, column) => {
+    if(board[row][column].getValue() === ""){
     console.log(`Dropping ${getActivePlayer().name}'s token into row: ${row} and column: ${column}...`);
     board[row][column].addToken(getActivePlayer().token)
     switchPlayer();
     printNewRound();
+    }else{
+      console.log("Choose another field");
+    }
   }
 
   return{
