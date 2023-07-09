@@ -107,6 +107,7 @@ const GameController = ((
       printNewRound()
     }else{
       console.log("Choose another field")
+      gameLog.innerHTML = "Choose another field"
     }
   };
 

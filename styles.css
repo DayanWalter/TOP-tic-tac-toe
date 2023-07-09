@@ -8,3 +8,11 @@ td{
 table{
     margin: auto;
 }
+div{
+    font-size: x-large;
+    border: 1px solid black;
+    margin: auto;
+    text-align: center;
+    width: 150px;
+    height: 150px;
+}
