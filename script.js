@@ -1,3 +1,4 @@
+// function for cell creation
 function Cell()  {
   let value = ""
 
@@ -12,6 +13,7 @@ function Cell()  {
     getValue
   }
 }
+
 // Module for Gameboard
 const Gameboard = (()=>{
   let board = []
@@ -53,8 +55,6 @@ return{
 }
 })()
 
-
-
 // Module for controlling the flow of the game
 const GameController = ((
   playerOneName = "Player One",
@@ -79,23 +79,30 @@ const GameController = ((
   // method for switching every round the player
   const switchPlayer = () => {
     activePlayer = activePlayer === players[0] ? players[1] : players[0]
-  };
+  }
 
   // method for getting the active player
   const getActivePlayer = () => activePlayer
 
+  let gameLog = document.getElementById("gameStatus")
+
   // method for starting a new round
   const printNewRound = () => {
     Gameboard.renderBoard()
+    gameLog.innerHTML = `${getActivePlayer().name}'s turn.`
     console.log(`${getActivePlayer().name}'s turn.`)
-  };
+  }
 
   // method for playing a round
   const playRound = (row, column) => {
     if(board[row][column].getValue() === ""){
       console.log(`Dropping ${getActivePlayer().name}'s token into row: ${row} and column: ${column}...`)
       board[row][column].addToken(getActivePlayer().token)
-      winner()
+      if (winner()) {
+        gameLog.innerHTML = `${getActivePlayer().name}, with ${getActivePlayer().token} won!`
+        Gameboard.renderBoard()
+        return; // Stop the code execution
+      }
       switchPlayer()
       printNewRound()
     }else{
@@ -106,7 +113,7 @@ const GameController = ((
   // method for checking for winner
   const winner = ()=>{
     if(checkEquality() === true){
-      console.log(`${getActivePlayer().name}, with ${getActivePlayer().token} won!`)
+      return true
     };
   };
 
@@ -147,8 +154,6 @@ const GameController = ((
     }
     return false
   }
-
-
 
   return{
     printNewRound,
