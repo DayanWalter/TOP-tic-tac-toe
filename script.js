@@ -162,11 +162,12 @@ const GameController = ((
     players[1].name = document.getElementById("name2").value
     Gameboard.renderBoard()
     gameLog.innerHTML = `${getActivePlayer().name}'s turn.`
-
-
   }
-
+  const restartGame = () => {
+    location.reload()
+  }
   return{
+    restartGame,
     printNewRound,
     playRound,
     setPlayerNames,

@@ -8,11 +8,12 @@ td{
 table{
     margin: auto;
 }
-div{
+#gameStatus, .nameInput{
+    display: grid;
     font-size: x-large;
     border: 1px solid black;
     margin: auto;
     text-align: center;
-    width: 150px;
+    width: 450px;
     height: 150px;
 }
