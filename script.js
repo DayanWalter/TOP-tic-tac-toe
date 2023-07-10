@@ -153,13 +153,19 @@ const GameController = ((
     const emptyCells = board.flat().filter(cell => cell.getValue() === "");
     return emptyCells.length === 0;
   }
+  const setPlayerNames = (name1, name2) => {
+    players[0].name = name1;
+    players[1].name = name2;
+    Gameboard.renderBoard()
+  }
 
   return{
     printNewRound,
     playRound,
+    setPlayerNames,
   }
 
-})()
+})();
 
 
 
