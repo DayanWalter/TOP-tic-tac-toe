@@ -1,19 +1,38 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: "Indie Flower", cursive;
+}
 td{
     font-size: xx-large;
     text-align: center;
     width: 150px;
     height: 150px;
-    background-color: green;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #F8F1E9
 }
 table{
     margin: auto;
 }
 #gameStatus, .nameInput{
     display: grid;
-    font-size: x-large;
+    background-color: #E4DCCF;
     border: 1px solid black;
+    border-radius: 5px;
     margin: auto;
     text-align: center;
     width: 450px;
     height: 150px;
+}
+#gameStatus{
+    place-items: center;
+    font-size: 36px;
+}
+
+.container{
+    background-color: #F2E8D2;
+    height: 100vh;
+    width: 700px;
+    margin: auto;
 }

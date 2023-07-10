@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <title>Tic-Tac-Toe</title>
 </head>
 <body>
-    <div id="gameStatus"></div>
-<div class="nameInput">
-    <input type="text" id="name1" placeholder="Enter Player 1">
-    <input type="text" id="name2" placeholder="Enter Player 2">
-    <button onclick="GameController.setPlayerNames()">Start Game</button>
-    <button onclick="GameController.restartGame()">Restart Game</button>
-
-</div>
-    <table id="boardArray">
-    </table>
-    <script src="script.js">
-    </script>
+    <div class="container">
+        <div id="gameStatus"></div>
+        <div class="nameInput">
+            <input type="text" id="name1" placeholder="Enter Player 1">
+            <input type="text" id="name2" placeholder="Enter Player 2">
+            <button onclick="GameController.setPlayerNames()">Start Game</button>
+            <button onclick="GameController.restartGame()">Restart Game</button>
+        </div>
+        <table id="boardArray"></table>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
