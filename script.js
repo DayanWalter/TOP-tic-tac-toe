@@ -29,8 +29,12 @@ for (let i = 0; i < rows; i++) {
 
   // method for rendering the board to html
   const renderBoard = () => {
+
     let table = document.getElementById("boardArray")
+    let gameLog = document.getElementById("gameStatus")
     table.innerHTML = ""
+    gameLog.innerHTML = ""
+
     for (let i = 0; i < board.length; i++) {
       let row = document.createElement("tr")
 
@@ -98,23 +102,23 @@ const GameController = ((
   // method for playing a round
   const playRound = (row, column) => {
     if(board[row][column].getValue() === ""){
-      console.log(`Dropping ${getActivePlayer().name}'s token into row: ${row} and column: ${column}...`)
       board[row][column].addToken(getActivePlayer().token)
 
       if (winner()) {
-        gameLog.innerHTML = `${getActivePlayer().name}, with ${getActivePlayer().token} won!`
-        console.log("winner = true");
         Gameboard.renderBoard()
+
+        gameLog.innerHTML = `${getActivePlayer().name}, with ${getActivePlayer().token} won!`
         return // Stop the code execution
       
       } else if (isDraw()) {
-        gameLog.innerHTML = "Draw, nobody won!"
-        console.log("DRAW!!!");
         Gameboard.renderBoard()
+
+        gameLog.innerHTML = "Draw, nobody won!"
         return
       }
-      switchPlayer()
-      printNewRound()
+        switchPlayer()
+        printNewRound()
+
     }else{
       console.log("Choose another field")
       gameLog.innerHTML = "Choose another field"
@@ -153,10 +157,13 @@ const GameController = ((
     const emptyCells = board.flat().filter(cell => cell.getValue() === "");
     return emptyCells.length === 0;
   }
-  const setPlayerNames = (name1, name2) => {
-    players[0].name = name1;
-    players[1].name = name2;
+  const setPlayerNames = () => {
+    players[0].name = document.getElementById("name1").value
+    players[1].name = document.getElementById("name2").value
     Gameboard.renderBoard()
+    gameLog.innerHTML = `${getActivePlayer().name}'s turn.`
+
+
   }
 
   return{
