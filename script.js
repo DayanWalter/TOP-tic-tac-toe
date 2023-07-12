@@ -1,143 +1,174 @@
 // function for cell creation
-function Cell()  {
-  let value = ""
+function Cell() {
+  let value = "";
 
   const addToken = (player) => {
-    value = player
-  }
+    value = player;
+  };
 
-  const getValue = () => value
+  const getValue = () => value;
 
   return {
     addToken,
-    getValue
-  }
+    getValue,
+  };
 }
 
 // Module for Gameboard
-const Gameboard = (()=>{
-  let board = []
-  let rows = 3
-  let columns = 3
+const Gameboard = (() => {
+  let board = [];
+  let rows = 3;
+  let columns = 3;
 
-for (let i = 0; i < rows; i++) {
-  board[i] = []
-  for (let j = 0; j < columns; j++) {
-    board[i].push(Cell())
-  }
-}
-
-  // method for rendering the board to html
-  const renderBoard = () => {
-
-    let table = document.getElementById("boardArray")
-    let gameLog = document.getElementById("gameStatus")
-    table.innerHTML = ""
-    gameLog.innerHTML = ""
-
-    for (let i = 0; i < board.length; i++) {
-      let row = document.createElement("tr")
-
-      for (let j = 0; j < board[i].length; j++) {
-          let cell = document.createElement("td")
-          cell.textContent = board[i][j].getValue()
-          cell.setAttribute("onclick", `GameController.playRound(${i}, ${j})`)
-          row.appendChild(cell)
-      }
-      table.appendChild(row)
+  for (let i = 0; i < rows; i++) {
+    board[i] = [];
+    for (let j = 0; j < columns; j++) {
+      board[i].push(Cell());
     }
   }
 
+  // method for rendering the board to html
+  const renderBoard = () => {
+    let table = document.getElementById("boardArray");
+    let gameLog = document.getElementById("gameStatus");
+    table.innerHTML = "";
+    gameLog.innerHTML = "";
+
+    for (let i = 0; i < board.length; i++) {
+      let row = document.createElement("tr");
+
+      for (let j = 0; j < board[i].length; j++) {
+        let cell = document.createElement("td");
+        cell.textContent = board[i][j].getValue();
+        cell.setAttribute("onclick", `GameController.playRound(${i}, ${j})`);
+        row.appendChild(cell);
+      }
+      table.appendChild(row);
+    }
+  };
+
   // method for "dropping" a token
   const dropToken = (row, column, player) => {
-    board[row][column].addToken(player)
-  }
+    board[row][column].addToken(player);
+  };
 
-return{
-  board,
-  renderBoard,
-  dropToken,
-}
-})()
+  return {
+    board,
+    renderBoard,
+    dropToken,
+  };
+})();
 
 // Module for controlling the flow of the game
 const GameController = ((
   playerOneName = "Player One",
-  playerTwoName = "Player Two") => {
-
+  playerTwoName = "Player Two"
+) => {
   const board = Gameboard.board;
 
   // Array for players
   const players = [
     {
       name: playerOneName,
-      token: "X"
+      token: "X",
     },
     {
       name: playerTwoName,
-      token: "O"
-    }
-  ]
+      token: "O",
+    },
+  ];
 
   // define the active player
-  let activePlayer = players[0]
+  let activePlayer = players[0];
 
   // method for switching every round the player
   const switchPlayer = () => {
-    activePlayer = activePlayer === players[0] ? players[1] : players[0]
-  }
+    activePlayer = activePlayer === players[0] ? players[1] : players[0];
+  };
 
   // method for getting the active player
-  const getActivePlayer = () => activePlayer
+  const getActivePlayer = () => activePlayer;
 
-  let gameLog = document.getElementById("gameStatus")
+  let gameLog = document.getElementById("gameStatus");
 
   // method for starting a new round
   const printNewRound = () => {
-    Gameboard.renderBoard()
-    gameLog.innerHTML = `${getActivePlayer().name}'s turn.`
-    console.log(`${getActivePlayer().name}'s turn.`)
-  }
+    Gameboard.renderBoard();
+    gameLog.innerHTML = `${getActivePlayer().name}'s turn.`;
+    console.log(`${getActivePlayer().name}'s turn.`);
+  };
 
   // method for playing a round
   const playRound = (row, column) => {
-    if(board[row][column].getValue() === ""){
-      board[row][column].addToken(getActivePlayer().token)
+    if (board[row][column].getValue() === "") {
+      board[row][column].addToken(getActivePlayer().token);
 
       if (winner()) {
-        Gameboard.renderBoard()
+        Gameboard.renderBoard();
 
-        gameLog.innerHTML = `${getActivePlayer().name}, with ${getActivePlayer().token} won!`
-        return // Stop the code execution
-      
+        gameLog.innerHTML = `${getActivePlayer().name}, with ${
+          getActivePlayer().token
+        } won!`;
+        return; // Stop the code execution
       } else if (isDraw()) {
-        Gameboard.renderBoard()
+        Gameboard.renderBoard();
 
-        gameLog.innerHTML = "Draw, nobody won!"
-        return
+        gameLog.innerHTML = "Draw, nobody won!";
+        return;
       }
-        switchPlayer()
-        printNewRound()
-
-    }else{
-      console.log("Choose another field")
-      gameLog.innerHTML = "Choose another field"
+      switchPlayer();
+      printNewRound();
+    } else {
+      console.log("Choose another field");
+      gameLog.innerHTML = "Choose another field";
     }
   };
 
   const winner = () => {
     const winConditions = [
       // horizontal win conditions
-      [[0, 0], [0, 1], [0, 2]],
-      [[1, 0], [1, 1], [1, 2]],
-      [[2, 0], [2, 1], [2, 2]],
+      [
+        [0, 0],
+        [0, 1],
+        [0, 2],
+      ],
+      [
+        [1, 0],
+        [1, 1],
+        [1, 2],
+      ],
+      [
+        [2, 0],
+        [2, 1],
+        [2, 2],
+      ],
       // vertical win conditions
-      [[0, 0], [1, 0], [2, 0]],
-      [[0, 1], [1, 1], [2, 1]],
-      [[0, 2], [1, 2], [2, 2]],
+      [
+        [0, 0],
+        [1, 0],
+        [2, 0],
+      ],
+      [
+        [0, 1],
+        [1, 1],
+        [2, 1],
+      ],
+      [
+        [0, 2],
+        [1, 2],
+        [2, 2],
+      ],
       // diagonal win conditions
-      [[0, 0], [1, 1], [2, 2]],
-      [[0, 2], [1, 1], [2, 0]]
+      [
+        [0, 0],
+        [1, 1],
+        [2, 2],
+      ],
+      [
+        [0, 2],
+        [1, 1],
+        [2, 0],
+      ],
     ];
 
     for (const condition of winConditions) {
@@ -152,30 +183,27 @@ const GameController = ((
     }
 
     return false;
-  }
+  };
   const isDraw = () => {
-    const emptyCells = board.flat().filter(cell => cell.getValue() === "");
+    const emptyCells = board.flat().filter((cell) => cell.getValue() === "");
     return emptyCells.length === 0;
-  }
+  };
   const setPlayerNames = () => {
-    players[0].name = document.getElementById("name1").value
-    players[1].name = document.getElementById("name2").value
-    Gameboard.renderBoard()
-    gameLog.innerHTML = `${getActivePlayer().name}'s turn.`
-  }
+    players[0].name = document.getElementById("name1").value;
+    players[1].name = document.getElementById("name2").value;
+    Gameboard.renderBoard();
+    gameLog.innerHTML = `${getActivePlayer().name}'s turn.`;
+  };
   const restartGame = () => {
-    location.reload()
-  }
-  return{
+    location.reload();
+  };
+  return {
     restartGame,
     printNewRound,
     playRound,
     setPlayerNames,
-  }
-
+  };
 })();
 
-
-
 // example
-GameController.printNewRound()
+GameController.printNewRound();
